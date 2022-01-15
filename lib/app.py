@@ -24,6 +24,8 @@ class Movie(BaseModel):
 class Superhero(BaseModel):
     # name = CharField()
     name = CharField()
+    # image = CharField()
+    # image = URLField()
 
 
 db.connect()
@@ -88,17 +90,17 @@ app = Flask(__name__)
 
 # Define our route
 # This syntax is using a Python decorator, which is essentially a succinct way to wrap a function in another function.
-@app.route('/character/', methods=['GET', 'POST'])
-@app.route('/character/<id>', methods=['GET', 'PUT', 'DELETE'])
+@app.route('/character/', methods=['GET', 'POST', 'PUT', 'DELETE'])
+@app.route('/character/<id>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def character(id=None):
     if request.method == 'GET':
-        if id:
-            character = Superhero.get(Superhero.id == id)
-            character = model_to_dict(character)
-            character = jsonify(character)
-            return character
         # if id:
-            # return jsonify(model_to_dict(Superhero.get(Superhero.id == id)))
+        # character = Superhero.get(Superhero.id == id)
+        # character = model_to_dict(character)
+        # character = jsonify(character)
+        # return character
+        if id:
+            return jsonify(model_to_dict(Superhero.get(Superhero.id == id)))
         else:
             characterList = []
             for character in Superhero.select():
@@ -115,26 +117,30 @@ def character(id=None):
         character = Superhero.get(Superhero.id == id)
         character.name = updated_character['name']
         character.save()
+        # character = model_to_dict(character)
+        # character = jsonify(character)
+        # return character
         return jsonify(model_to_dict(Superhero.get(Superhero.id == id)))
 
-        return character
-
-    if request.method == "POST":
-        character = request.get_json()
-        character = dict_to_model(Superhero, character)
-        character.save()
-        character = model_to_dict(character)
-        character = jsonify(character)
-        return character
+    # if request.method == "POST":
+    #     character = request.get_json()
+    #     character = dict_to_model(Superhero, character)
+    #     character.save()
+    #     character = model_to_dict(character)
+    #     character = jsonify(character)
+    #     return character
 
     # if request.method == 'POST':
     #     new_character = dict_to_model(Superhero, request.get_json())
     #     new_character.save()
     #     return jsonify({"success": True})
 
+    if request.method == 'POST':
+        dict_to_model(Superhero, request.get_json()).save()
+        return jsonify({"success": True})
+
     if request.method == 'DELETE':
-        character = Superhero.get(Superhero.id == id)
-        character.delete_instance()
+        Superhero.get(Superhero.id == id).delete_instance()
         return jsonify({"deleted": True})
 
 
@@ -151,15 +157,22 @@ def movie(id=None):
             return jsonify(movieList)
 
     if request.method == 'PUT':
-        return 'PUT request'
+        updated_movie = request.get_json()
+        movie = Movie.get(Movie.id == id)
+        movie.title = updated_movie['title']
+        movie.release_date = updated_movie['release_date']
+        movie.save()
+        # movie = model_to_dict(movie)
+        # movie = jsonify(movie)
+        # return movie
+        return jsonify(model_to_dict(Movie.get(Movie.id == id)))
 
     if request.method == 'POST':
-        return 'POST request'
+        dict_to_model(Movie, request.get_json()).save()
+        return jsonify({"success": True})
 
     if request.method == 'DELETE':
-        movie = Movie.get(Movie.id == id)
-        movie.delete_instance()
-        # return jsonify(delete_instance(Movie.get(Movie.id == id)))
+        Movie.get(Movie.id == id).delete_instance()
         return jsonify({"deleted": True})
 
 
