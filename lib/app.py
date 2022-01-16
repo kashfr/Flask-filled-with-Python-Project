@@ -18,69 +18,93 @@ class BaseModel(Model):
 
 class Movie(BaseModel):
     title = CharField()
-    release_date = DateField()
+    # release_date = DateField()
+    # release_date = TextField()
+    release_date = CharField()
 
 
 class Superhero(BaseModel):
     # name = CharField()
     name = CharField()
-    # image = CharField()
+    # image = TextField()
     # image = URLField()
+    image = CharField()
 
 
 db.connect()
 db.drop_tables([Movie, Superhero])
 db.create_tables([Movie, Superhero])
 
-movie_1 = Movie(title='Iron Man', release_date='2008-5-2').save()
+# Phase One
+movie_1 = Movie(title='Iron Man', release_date='May 2, 2008').save()
 movie_2 = Movie(title='The Incredible Hulk',
-                release_date='2008-6-13').save()
-movie_3 = Movie(title='Iron Man 2', release_date='2010-5-7').save()
-movie_4 = Movie(title='Thor', release_date='2011-5-6').save()
+                release_date='June 13, 2008').save()
+movie_3 = Movie(title='Iron Man 2', release_date='May 7, 2010').save()
+movie_4 = Movie(title='Thor', release_date='May 6, 2011').save()
 movie_5 = Movie(title='Captain America: The First Avenger',
-                release_date='2011-7-22').save()
+                release_date='July 22, 2011').save()
 movie_6 = Movie(title="Marvel's The Avengers",
-                release_date='2012-5-4').save()
+                release_date='May 4, 2012').save()
 
+# # Phase Two
 movie_7 = Movie(title='Iron Man 3',
-                release_date='2013-5-3').save()
+                release_date='May 3, 2013').save()
 movie_8 = Movie(title='Thor: The Dark World',
-                release_date='2013-11-8').save()
+                release_date='November 8, 2013').save()
 movie_9 = Movie(title='Captain America: The Winter Soldier',
-                release_date='2014-4-4').save()
+                release_date='April 4, 2014').save()
 movie_10 = Movie(title='Guardians of the Galaxy',
-                 release_date='2014-8-1').save()
+                 release_date='August 1, 2014').save()
 movie_11 = Movie(title='Avengers: Age of Ultron',
-                 release_date='5/1/2015').save()
+                 release_date='May 1, 2015').save()
 movie_12 = Movie(title='Ant-Man',
-                 release_date='7/17/15').save()
+                 release_date='July 17, 2015').save()
 
+# Phase Three
 movie_13 = Movie(title='Captain America: Civil War',
-                 release_date='2016-5-6').save()
-movie_14 = Movie(title='Doctor Strange', release_date='2008-5-2').save()
+                 release_date='May 6, 2016').save()
+movie_14 = Movie(title='Doctor Strange',
+                 release_date='November 4, 2016').save()
 movie_15 = Movie(title='Guardians of the Galaxy Vol. 2',
-                 release_date='2008-5-2').save()
+                 release_date='May 5, 2017').save()
 movie_16 = Movie(title='Spider-Man: Homecoming',
-                 release_date='2008-5-2').save()
-movie_17 = Movie(title='Thor: Ragnorak', release_date='2008-5-2').save()
-movie_18 = Movie(title='Black Panther', release_date='2008-5-2').save()
+                 release_date='July 7, 2017').save()
+movie_17 = Movie(title='Thor: Ragnorak',
+                 release_date='November 3, 2017').save()
+movie_18 = Movie(title='Black Panther',
+                 release_date='February 16, 2018').save()
 movie_19 = Movie(title='Avengers: Infinity War',
-                 release_date='2008-5-2').save()
+                 release_date='April 27, 2018').save()
 movie_20 = Movie(title='Ant-Man and the Wasp',
-                 release_date='2008-5-2').save()
-movie_21 = Movie(title='Captain Marvel', release_date='2008-5-2').save()
-movie_22 = Movie(title='Avengers: Endgame', release_date='2008-5-2').save()
-movie_22 = Movie(title='Spider-Man: Far From Home',
-                 release_date='2019-7-2').save()
+                 release_date='July 6, 2018').save()
+movie_21 = Movie(title='Captain Marvel', release_date='March 8, 2019').save()
+movie_22 = Movie(title='Avengers: Endgame',
+                 release_date='April 26, 2019 ').save()
+movie_23 = Movie(title='Spider-Man: Far From Home',
+                 release_date='July 2, 2019 ').save()
 
-scarlett_johanson = Superhero(name='Black Widow').save()
-robert_downey_jr = Superhero(name='Iron Man').save()
-chris_evans = Superhero(name='Captain America').save()
-chadwick_boseman = Superhero(name='Black Panther').save()
-tom_holland = Superhero(name='Spider-Man').save()
-mark_ruffalo = Superhero(name='Hulk').save()
-chris_hemsworth = Superhero(name='Thor').save()
-jeremy_renner = Superhero(name='Hawkeye').save()
+# Phase 4
+movie_24 = Movie(title='Black Widow', release_date='July 9, 2021').save()
+movie_25 = Movie(title='Shang-Chi and the Legend of the Ten Rings',
+                 release_date='September 3, 2021').save()
+movie_26 = Movie(title='Eternals', release_date='November 5, 2021').save()
+movie_27 = Movie(title='Spider-Man: No Way Home',
+                 release_date='December 17, 2021').save()
+
+
+# Actors
+scarlett_johanson = Superhero(
+    name='Black Widow', image='https://static.wikia.nocookie.net/marvelcinematicuniverse/images/9/9a/BlackWidow-EndgameProfile.jpg').save()
+robert_downey_jr = Superhero(
+    name='Iron Man', image='https://static.wikia.nocookie.net/marvelcinematicuniverse/images/3/35/IronMan-EndgameProfile.jpg').save()
+chris_evans = Superhero(name='Captain America',
+                        image='https://static.wikia.nocookie.net/marvelcinematicuniverse/images/d/d7/CapAmerica-EndgameProfile.jpg').save()
+chadwick_boseman = Superhero(
+    name='Black Panther', image='https://static.wikia.nocookie.net/marvelcinematicuniverse/images/9/99/Black_Panther_AIW_Profile.jpg').save()
+# tom_holland = Superhero(name='Spider-Man').save()
+# mark_ruffalo = Superhero(name='Hulk').save()
+# chris_hemsworth = Superhero(name='Thor').save()
+# jeremy_renner = Superhero(name='Hawkeye').save()
 
 
 # Initialize Flask
@@ -116,11 +140,14 @@ def character(id=None):
         updated_character = request.get_json()
         character = Superhero.get(Superhero.id == id)
         character.name = updated_character['name']
+        character.image = updated_character['image']
+        # Superhero.get(Superhero.id == id).name = updated_character['name']
+        # Superhero.get(Superhero.id == id).save()
         character.save()
         # character = model_to_dict(character)
         # character = jsonify(character)
         # return character
-        return jsonify(model_to_dict(Superhero.get(Superhero.id == id)))
+        return jsonify(model_to_dict(character))
 
     # if request.method == "POST":
     #     character = request.get_json()
@@ -165,7 +192,8 @@ def movie(id=None):
         # movie = model_to_dict(movie)
         # movie = jsonify(movie)
         # return movie
-        return jsonify(model_to_dict(Movie.get(Movie.id == id)))
+        return jsonify(model_to_dict(movie))
+        # return jsonify(model_to_dict(Movie.get(Movie.id == id)))
 
     if request.method == 'POST':
         dict_to_model(Movie, request.get_json()).save()
