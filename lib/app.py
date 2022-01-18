@@ -1,9 +1,5 @@
 # Import the 'Flask' class from the 'flask' library.
-from unicodedata import name
 from flask import Flask, request, jsonify, redirect
-# from flask import request
-# from flask import jsonify
-from markupsafe import re
 from peewee import *
 from playhouse.shortcuts import model_to_dict, dict_to_model
 
@@ -19,16 +15,11 @@ class BaseModel(Model):
 class Movie(BaseModel):
     title = CharField()
     poster_path = CharField()
-    # release_date = DateField()
-    # release_date = TextField()
     release_date = CharField()
 
 
 class Superhero(BaseModel):
-    # name = CharField()
     character = CharField()
-    # image = TextField()
-    # image = URLField()
     profile_path = CharField()
 
 
@@ -136,12 +127,7 @@ def movie(id=None):
         movie.poster_path = updated_movie['poster_path']
         movie.release_date = updated_movie['release_date']
         movie.save()
-        # movie = model_to_dict(movie)
-        # movie = jsonify(movie)
-        # return movie
         return redirect('/movie/')
-        # return jsonify(model_to_dict(movie))
-        # return jsonify(model_to_dict(Movie.get(Movie.id == id)))
 
     if request.method == 'POST':
         dict_to_model(Movie, request.get_json()).save()
@@ -156,11 +142,6 @@ def movie(id=None):
 @app.route('/actor/<id>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def actor(id=None):
     if request.method == 'GET':
-        # if id:
-        # actor = Superhero.get(Superhero.id == id)
-        # actor = model_to_dict(actor)
-        # actor = jsonify(actor)
-        # return actor
         if id:
             return jsonify(model_to_dict(Superhero.get(Superhero.id == id)))
         else:
@@ -168,23 +149,13 @@ def actor(id=None):
             for actor in Superhero.select():
                 actorList.append(model_to_dict(actor))
             return jsonify(actorList)
-        # else:
-        #     actorList = []
-        #     for actor in Superhero.select():
-        #         actorList.append(model_to_dict(actor))
-        #     return jsonify(actorList)
 
     if request.method == 'PUT':
         updated_actor = request.get_json()
         actor = Superhero.get(Superhero.id == id)
         actor.character = updated_actor['character']
         actor.profile_path = updated_actor['profile_path']
-        # Superhero.get(Superhero.id == id).name = updated_actor['name']
-        # Superhero.get(Superhero.id == id).save()
         actor.save()
-        # actor = model_to_dict(actor)
-        # actor = jsonify(actor)
-        # return actor
         return jsonify(model_to_dict(actor))
 
     # if request.method == "POST":
@@ -202,21 +173,11 @@ def actor(id=None):
 
     if request.method == 'POST':
         dict_to_model(Superhero, request.get_json()).save()
-        return jsonify({"success": True})
+        return jsonify({"Success!": True})
 
     if request.method == 'DELETE':
         Superhero.get(Superhero.id == id).delete_instance()
-        return jsonify({"deleted": True})
-
-
-@app.route('/get-json')
-def getJson():
-    return jsonify({
-        "name": "Garfield",
-        "hatesMondays": True,
-        "friends": ["Sheldon", "Wade", "Orson", "Squeak"],
-        "jobs": ["Bartender", "Tutor", "Uber Driver"]
-    })
+        return jsonify({"Got that ass! - Thanos": True})
 
 
 @app.route('/')
@@ -225,4 +186,5 @@ def index():
 
 
 # Run our application, by default on port 5000
-app.run(host='localhost', port=9000, debug=True)
+if __name__ == '__main__':
+    app.run(host='localhost', port=9000, debug=True)
